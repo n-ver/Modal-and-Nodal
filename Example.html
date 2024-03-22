@@ -1,0 +1,1100 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>TJD-Online: Musician Index</title>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css?t=1703800667" title="Style">
+<link rel="stylesheet" type="text/css" media="print" href="print.css" title="Style">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+bdir = 'buttons';
+</script>
+
+<style type="text/css" media="screen">
+#prevNext {
+	float:left;
+	width:95px;
+	height:25px;
+	margin-top:0;
+}
+
+/*
+#leader {
+	float:left;
+	width:96px;
+	height:37px;
+}
+*/
+
+/* Navigation links of one type */
+.nav-block {
+	height: 39px;
+	display: inline-block;
+	float: left;
+}
+.nav-block a {
+	display: inline-block;
+	height: 25px;
+}
+.nav-header {
+	vertical-align: top;
+	height: 14px;
+	width: 100%;
+	box-sizing: border-box;
+	color: #000;
+	display: inline-block;
+	font: bold 10.5px / 14px Arial, sans-serif;
+	padding: 0 0 0 5px;
+	text-align: left;
+}
+.nav-separator {
+	border-left: 1px solid #ccc;
+}
+.nav-button {
+	display: inline-block;
+	vertical-align: top;
+	/* border-radius: 1px; */
+	/* width: 50px; */
+	padding: 0 5px 0 5px;
+	height: 25px;
+	color: #000;
+	font: bold 13px / 25px Arial, sans-serif;
+	text-align: center;
+}
+.nav-button:hover {
+	text-decoration: underline;
+}
+.subbutton {
+	display: inline-block;
+	vertical-align: top;
+	background: linear-gradient(#cccccc, #9a9a9a);
+	height: 21px;
+	width: auto;
+	font: bold 12px / 21px Arial, sans-serif;
+	padding: 0 4px;
+	border-top: 0;
+	border-bottom: 0;
+	border-right: 1px solid #ccc;
+	border-left: 0;
+}
+#leader-group {
+	/* width: 100px; */
+}
+.leader-element {
+	background: linear-gradient(#22b5e9, #1b8eb6);
+	color: #000;
+}
+#session-group {
+	/* width: 294px; */
+	/* height:39px; */
+	/* background-color: #cd2121; */
+}
+.session-element {
+	background: linear-gradient(#e62525, #be1c1c);
+	color: #FFF;
+}
+#musician-group {
+	/* width: 100px; */
+}
+.musician-element {
+	background: linear-gradient(#ffff0e, #e3e00b);
+	color: #000;
+}
+#tune-group {
+	/* width: 100px; */
+}
+.tune-element {
+	background: linear-gradient(#ffb30b, #e49208);
+	color: #000;
+}
+#multi-search-group {
+	/* width: 228px; */
+}
+.multi-search-element {
+	background: linear-gradient(#39e539, #2cb22c);
+	color: #000;
+}
+#record-label-group {
+	/* width: 100px; */
+}
+.record-label-element {
+	background: linear-gradient(#e5ac00, #b28500);
+	color: #000;
+}
+#tips-group {
+	display: inline-block;
+	position: absolute;
+	left: 691px;
+	/*
+	position: absolute;
+	left: 600px;
+	*/
+}
+
+/*
+#tune {
+	float:left;
+	width:96px;
+	height:37px;
+}
+#multiSearch {
+	float:left;
+	width:213px;
+	height:37px;
+}
+
+#recordLabel {
+	float:left;
+	width:96px;
+	height:37px;
+}
+*/
+
+#bottomButtons {
+	/* float:left; */
+	/* width:537px; */
+	width: 100%;
+	height:21px;
+	line-height: 0px;
+	clear: both;
+}
+#bottomButtons a {
+	display: inline-block;
+	height: 21px;
+}
+#helpLogout {
+	float:right;
+	width:224px;
+	height:21px;
+	line-height: 0px;
+	vertical-align: botton;
+}
+#bar-left {
+	display: inline-block;
+	float: left;
+	width: 20%;
+	/* height: 20px; */
+}
+#blackBar {
+	/* float:left; */
+	clear: both;
+	width: 100%;
+	height: 20px;
+	/*
+	top: 58px; 
+	position: fixed;
+	*/
+	background-color: black;
+}
+#blackBar td {
+	font-size: 10px;
+}
+#top-container {
+	width: 100%;
+	/* background:url(images/buttonbarBG.gif) top repeat-x; */
+	background-color: #cecece;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+}
+#button-container {
+	/* width: 992px; */
+	/* width: 100%; */
+	/* height: 58px; */
+	line-height: 10px;
+}
+#button-container img { border: 0; }
+#button-container a {
+	background: initial;
+}
+#button-container a:hover {
+	background: initial;
+}
+#barright { padding-top: 1px; }
+#pagetitle { font-size: 15px; margin: 0; padding: 0; text-align: left; }
+#skipToContent {
+	position: absolute;
+	top: -45px;
+}
+#skipToContent:focus {
+	position: static;
+	display: inline-block;
+	font-size: 10px;
+	height: 14px;
+}
+#buttonPrevious {
+	position: relative;
+	top: 14px;
+}
+#buttonNext {
+	position: relative;
+	top: 14px;
+}
+.subbutton:hover {
+	text-decoration: underline;
+}
+.reverse {
+	color: #000;
+	background: linear-gradient(#f0f0f0, #e0e0e0);
+}
+#tip-button {
+	/* margin-left: 205px; */
+}
+#logout-button {
+	background: linear-gradient(#dd0048, #b5003d);
+	color: white;
+	font-weight: bold;
+}
+</style>
+<script type="text/javascript" src="js/buttonbar.js"></script>
+<!-- <div style="height: 65px; width: 100%; background-color: #cfcfcf;"> -->
+<div id="top-container">
+<nav id="button-container" style="font-size: 0; line-height: 0;">
+  <div id="prevNext">
+    <a href="#main" id="skipToContent" style="height: 39px;"><div style="padding-top: 4px; vertical-align: top; background: #CD2121; border-radius: 1px; width: 95px; height: 39px; color: #FFF; display: inline-block; font: normal 10px / 12px &quot;Arial&quot;, sans-serif; text-align: center;">Skip to<br>content</div></a>
+    
+    
+  </div>
+  <div id="leader-group" class="nav-block">,
+    <div class="nav-header leader-element">Leader/Group</div>
+    <div class="leader-element" style="width: 100%;">
+      <a href="LeaderSearch?dest=LeaderIndex"><div class="nav-button leader-element">Search</div></a>
+      <a href="LeaderIndex?lid=-1&select=false"><div class="nav-button leader-element nav-separator">Index</div></a>
+    </div>
+  </div>
+  <div id="session-group" class="nav-block">
+    <div class="nav-header session-element">Session</div>
+    <div class="session-element" style="width: 100%;">
+      <a href="SessionNumSearch"><div id="session-search" class="nav-button session-element">#Search</div></a>
+      
+      
+      <a href="NewSessionIndex"><div id="session-new" class="nav-button session-element nav-separator">New / Reissues</div></a>
+    </div>
+  </div>
+  
+  <div id="musician-group" class="nav-block">
+    <div class="nav-header musician-element">Musician</div>
+    <div class="musician-element" style="width: 100%;">
+      <a href="MusicianSearch?dest=MusicianIndex"><div class="nav-button musician-element">Search</div></a>
+      <a href="MusicianIndex?mid=258350&select=false"><div class="nav-button musician-element nav-separator">Index</div></a>
+    </div>
+  </div>
+  
+  
+  <div id="tune-group" class="nav-block">
+    <div class="nav-header tune-element">Tune</div>
+    <div class="tune-element" style="width: 100%;">
+      <a href="TuneSearch?dest=TuneIndex"><div class="nav-button tune-element">Search</div></a>
+      <a href="TuneIndex?tid=-1&select=false"><div class="nav-button tune-element nav-separator">Index</div></a>
+    </div>
+  </div>
+  
+  
+  <div id="multi-search-group" class="nav-block">
+    <div class="nav-header multi-search-element">Multi-search</div>
+    <div class="multi-search-element" style="width: 100%;">
+      <a href="MultiSearch?dest=MultiDetail"><div class="nav-button multi-search-element">Search</div></a>
+      <a href="WordSearch"><div class="nav-button multi-search-element nav-separator">Word Search</div></a>
+      <a href="DateSearch"><div class="nav-button multi-search-element nav-separator">Date Search</div></a>
+      </div>
+    </div>
+  
+  
+  <div id="record-label-group" class="nav-block">
+    <div class="nav-header record-label-element">Record Label</div>
+    <div class="record-label-element" style="width: 100%;">
+      <a href="ReleaseSearch"><div class="nav-button record-label-element">Search</div></a>
+      <a href="CompanyIndex"><div class="nav-button record-label-element">Index</div></a>
+    </div>
+  </div>
+  
+  <div id="bottomButtons">
+    
+      
+	    <a href="UserPreferences"><div class="subbutton">My Preferences</div></a>
+      
+	  
+    
+    <a href="cadence/"><div class="subbutton">Cadence Index</div></a>
+    
+	<div id="tips-group">
+      <a href="Tips.do?show"><div id="tip-button" class="subbutton">Tips</div></a>
+	  <a href="help/contact.html" target="help"><div class="subbutton">Contact Us</div></a>
+      <a href="help/intro.jsp" target="help"><div class="subbutton">Help</div></a>
+	  <a href="Logout"><div id="logout-button" class="subbutton">Log out</div></a>
+	</div>
+  </div>
+</nav>
+<header id="blackBar">
+  <div id="bar-left">
+    
+    
+  </div>
+  
+
+<div class="detailtitle" style="height: 20px; overflow: hidden;">
+  <h1 id="pagetitle" style="color: #FFFF00; font-weight: bold;">Musician Index
+    
+  </h1>
+</div>
+
+</header>
+</div>
+<main id="main" class="detail">
+
+
+
+
+<script type="text/javascript" language="JavaScript"><!--
+function setfocus() { window.focus(); }
+jQuery(function(){
+	var pos = 'M258350';
+	if (pos) {
+		var target = $('#'+pos);
+		if (target.length) {
+			window.scrollTo(0,target.offset().top - 96);
+		}
+	}
+	$('table.index tr').click(function() {
+		var url = $(this).find('a').attr('href');
+		if (url)
+			window.location = url;
+	});
+});
+//--></script>
+<style type="text/css"><!--
+td {font-family: Arial, Helvetica, sans-serif; font-size: 15px; }
+--></style>
+<form name="nav"><input type="hidden" name="mid" value="258350"></form>
+<table class="index" style="word-break: break-all;">
+<thead>
+<tr class="index-header">
+	<td style="width: 45%;">Musician Name</td>
+	<td style="width: 15%;">Years</td>
+	<td style="width: 35%;">Instruments</td>
+	<td>Sessions</td>
+</tr>
+</thead>
+<tbody>
+<tr class="index-header">
+
+<tr id="M258350" class="selected">
+	<td><a href="MusicianDetail?mid=258350"></a></td>
+	<td>1976-2023</td>
+	<td>&nbsp;</td>
+	<td>5</td>
+</tr>
+
+<tr id="M258493" class="index1">
+	<td><a href="MusicianDetail?mid=258493">Lourenco</a></td>
+	<td>2022</td>
+	<td>&nbsp;</td>
+	<td>1</td>
+</tr>
+
+<tr id="M37097" class="index0">
+	<td><a href="MusicianDetail?mid=37097">Anthony &quot;(Much) More Ace&quot;</a></td>
+	<td>1995</td>
+	<td>perc</td>
+	<td>1</td>
+</tr>
+
+<tr id="M63563" class="index1">
+	<td><a href="MusicianDetail?mid=63563">&quot;Barrell House Bucky&quot;</a></td>
+	<td>1973</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+<tr id="M248100" class="index0">
+	<td><a href="MusicianDetail?mid=248100">&quot;Big Daddy&quot;</a></td>
+	<td>1968</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M224042" class="index1">
+	<td><a href="MusicianDetail?mid=224042">&quot;Big Duke&quot;</a></td>
+	<td>1953</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M75499" class="index0">
+	<td><a href="MusicianDetail?mid=75499">&quot;Blackie&quot;</a></td>
+	<td>1926-1927</td>
+	<td>d</td>
+	<td>6</td>
+</tr>
+
+<tr id="M223896" class="index1">
+	<td><a href="MusicianDetail?mid=223896">... &quot;Buckethead&quot;</a></td>
+	<td>1993</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M87966" class="index0">
+	<td><a href="MusicianDetail?mid=87966">Ced &quot;C&quot;</a></td>
+	<td>1996-2000</td>
+	<td>backing-vcl-arr,misc. inst,keyboards</td>
+	<td>2</td>
+</tr>
+
+<tr id="M87967" class="index1">
+	<td><a href="MusicianDetail?mid=87967">Vic &quot;C&quot;</a></td>
+	<td>1996-2000</td>
+	<td>b-g,backing-vcl-arr,misc. inst</td>
+	<td>2</td>
+</tr>
+
+<tr id="M106874" class="index0">
+	<td><a href="MusicianDetail?mid=106874">The &quot;Can't Come In&quot; Chorale</a></td>
+	<td>2003</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M224527" class="index1">
+	<td><a href="MusicianDetail?mid=224527">Luis Mario &quot;Cimarron&quot;</a></td>
+	<td>2001</td>
+	<td>g,backing-vcl,vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M211336" class="index0">
+	<td><a href="MusicianDetail?mid=211336">&quot;Clazz&quot;</a></td>
+	<td>1999</td>
+	<td>keyboards</td>
+	<td>1</td>
+</tr>
+
+<tr id="M214379" class="index1">
+	<td><a href="MusicianDetail?mid=214379">Richie's &quot;Cousin Bruce&quot;</a></td>
+	<td>2015</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M45614" class="index0">
+	<td><a href="MusicianDetail?mid=45614">The &quot;Crimm&quot;</a></td>
+	<td>1999</td>
+	<td>rap</td>
+	<td>1</td>
+</tr>
+
+<tr id="M164992" class="index1">
+	<td><a href="MusicianDetail?mid=164992">Josep &quot;Cucurel.la&quot;</a></td>
+	<td>1996</td>
+	<td>fretless-b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M153447" class="index0">
+	<td><a href="MusicianDetail?mid=153447">&quot;Derf&quot;</a></td>
+	<td>1973</td>
+	<td>cga</td>
+	<td>1</td>
+</tr>
+
+<tr id="M224657" class="index1">
+	<td><a href="MusicianDetail?mid=224657">Diego &quot;El Cigala&quot;</a></td>
+	<td>2001</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M141458" class="index0">
+	<td><a href="MusicianDetail?mid=141458">Alfredo &quot;El Indio&quot;</a></td>
+	<td>2001</td>
+	<td>perc</td>
+	<td>1</td>
+</tr>
+
+<tr id="M221163" class="index1">
+	<td><a href="MusicianDetail?mid=221163">Agustin &quot;El Talega&quot;</a></td>
+	<td>1986</td>
+	<td>palmas y jaleos</td>
+	<td>1</td>
+</tr>
+
+<tr id="M125893" class="index0">
+	<td><a href="MusicianDetail?mid=125893">&quot;Flash&quot;</a></td>
+	<td>1982</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M63562" class="index1">
+	<td><a href="MusicianDetail?mid=63562">&quot;Four String Jack&quot;</a></td>
+	<td>1973</td>
+	<td>el-b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M158245" class="index0">
+	<td><a href="MusicianDetail?mid=158245">Wesley &quot;G&quot;</a></td>
+	<td>1999</td>
+	<td>g</td>
+	<td>3</td>
+</tr>
+
+<tr id="M63560" class="index1">
+	<td><a href="MusicianDetail?mid=63560">&quot;Good Rocking Ralph&quot;</a></td>
+	<td>1973</td>
+	<td>el-p</td>
+	<td>1</td>
+</tr>
+
+<tr id="M21553" class="index0">
+	<td><a href="MusicianDetail?mid=21553">&quot;Google Eyes&quot;</a></td>
+	<td>1950</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M86160" class="index1">
+	<td><a href="MusicianDetail?mid=86160">&quot;Gordo&quot;</a></td>
+	<td>2003</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+<tr id="M2804" class="index0">
+	<td><a href="MusicianDetail?mid=2804">Bewmaster &quot;Improv&quot;</a></td>
+	<td>2001</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M212667" class="index1">
+	<td><a href="MusicianDetail?mid=212667">&quot;John Lou&quot;</a></td>
+	<td>1978</td>
+	<td>p</td>
+	<td>1</td>
+</tr>
+
+<tr id="M216840" class="index0">
+	<td><a href="MusicianDetail?mid=216840">&quot;M&quot;</a></td>
+	<td>2009</td>
+	<td>el-b,g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M214024" class="index1">
+	<td><a href="MusicianDetail?mid=214024">&quot;Manne&quot;</a></td>
+	<td>1960</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M117411" class="index0">
+	<td><a href="MusicianDetail?mid=117411">Carl &quot;P&quot;, Jr.</a></td>
+	<td>1997</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M38053" class="index1">
+	<td><a href="MusicianDetail?mid=38053">&quot;Perri&quot;</a></td>
+	<td>1992</td>
+	<td>backing-vcl</td>
+	<td>2</td>
+</tr>
+
+<tr id="M153446" class="index0">
+	<td><a href="MusicianDetail?mid=153446">&quot;Ringo&quot;</a></td>
+	<td>1973</td>
+	<td>org,g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M209900" class="index1">
+	<td><a href="MusicianDetail?mid=209900">&quot;Slap Happy&quot;</a></td>
+	<td>1997</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M63561" class="index0">
+	<td><a href="MusicianDetail?mid=63561">&quot;SOB Sammy&quot;</a></td>
+	<td>1973</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M117419" class="index1">
+	<td><a href="MusicianDetail?mid=117419">Henry &quot;The Motivator&quot;</a></td>
+	<td>1997</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M223520" class="index0">
+	<td><a href="MusicianDetail?mid=223520">&quot;Thunder Thumb&quot;</a></td>
+	<td>1969</td>
+	<td>el-b</td>
+	<td>2</td>
+</tr>
+
+<tr id="M210153" class="index1">
+	<td><a href="MusicianDetail?mid=210153">&quot;Tjalmar&quot;</a></td>
+	<td>1986</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+<tr id="M211571" class="index0">
+	<td><a href="MusicianDetail?mid=211571">&quot;Trombone Charlie&quot;</a></td>
+	<td>1944</td>
+	<td>tb</td>
+	<td>1</td>
+</tr>
+
+<tr id="M75498" class="index1">
+	<td><a href="MusicianDetail?mid=75498">&quot;Tubi&quot;</a></td>
+	<td>1926-1927</td>
+	<td>tu</td>
+	<td>6</td>
+</tr>
+
+<tr id="M207256" class="index0">
+	<td><a href="MusicianDetail?mid=207256">&quot;Willem&quot;</a></td>
+	<td>1982</td>
+	<td>spoons</td>
+	<td>1</td>
+</tr>
+
+<tr id="M222919" class="index1">
+	<td><a href="MusicianDetail?mid=222919">Dall 'Olmo</a></td>
+	<td>1955</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M111533" class="index0">
+	<td><a href="MusicianDetail?mid=111533">Bobby 't Sas</a></td>
+	<td>1928</td>
+	<td>d,vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M111530" class="index1">
+	<td><a href="MusicianDetail?mid=111530">Eugene 't Sas</a></td>
+	<td>1928</td>
+	<td>d,vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M205406" class="index0">
+	<td><a href="MusicianDetail?mid=205406">'Wilda</a></td>
+	<td>1962</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M246986" class="index1">
+	<td><a href="MusicianDetail?mid=246986">The Rising Sun Orchestra (horn section)</a></td>
+	<td>2012</td>
+	<td>&nbsp;</td>
+	<td>1</td>
+</tr>
+
+<tr id="M258193" class="index0">
+	<td><a href="MusicianDetail?mid=258193">Anna *Pauline</a></td>
+	<td>2015</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M221030" class="index1">
+	<td><a href="MusicianDetail?mid=221030">Willy ---</a></td>
+	<td>1946</td>
+	<td>tp</td>
+	<td>3</td>
+</tr>
+
+<tr id="M82320" class="index0">
+	<td><a href="MusicianDetail?mid=82320">&quot;Chief&quot; ...</a></td>
+	<td>1923-1944</td>
+	<td>tu,b</td>
+	<td>7</td>
+</tr>
+
+<tr id="M106354" class="index1">
+	<td><a href="MusicianDetail?mid=106354">&quot;Shaky Walter&quot; ...</a></td>
+	<td>1927-1928</td>
+	<td>hca</td>
+	<td>5</td>
+</tr>
+
+<tr id="M123305" class="index0">
+	<td><a href="MusicianDetail?mid=123305">Alain ...</a></td>
+	<td>1982</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+<tr id="M125584" class="index1">
+	<td><a href="MusicianDetail?mid=125584">Alexandre ...</a></td>
+	<td>1948</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+<tr id="M180726" class="index0">
+	<td><a href="MusicianDetail?mid=180726">Allan ...</a></td>
+	<td>1960</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M227055" class="index1">
+	<td><a href="MusicianDetail?mid=227055">Andre ...</a></td>
+	<td>1955</td>
+	<td>p</td>
+	<td>1</td>
+</tr>
+
+<tr id="M146080" class="index0">
+	<td><a href="MusicianDetail?mid=146080">Anny ...</a></td>
+	<td>1988</td>
+	<td>g,keyboards</td>
+	<td>1</td>
+</tr>
+
+<tr id="M197299" class="index1">
+	<td><a href="MusicianDetail?mid=197299">Astrid &quot;La Holandesa&quot; ...</a></td>
+	<td>1998-1999</td>
+	<td>vcl,coros</td>
+	<td>2</td>
+</tr>
+
+<tr id="M121956" class="index0">
+	<td><a href="MusicianDetail?mid=121956">B.J. ...</a></td>
+	<td>1960</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M213153" class="index1">
+	<td><a href="MusicianDetail?mid=213153">Bangla ...</a></td>
+	<td>1987</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M27418" class="index0">
+	<td><a href="MusicianDetail?mid=27418">Barbara ...</a></td>
+	<td>1977</td>
+	<td>&nbsp;</td>
+	<td>1</td>
+</tr>
+
+<tr id="M38813" class="index1">
+	<td><a href="MusicianDetail?mid=38813">Bart ...</a></td>
+	<td>2004</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M151983" class="index0">
+	<td><a href="MusicianDetail?mid=151983">Bert ...</a></td>
+	<td>1929</td>
+	<td>as</td>
+	<td>1</td>
+</tr>
+
+<tr id="M131979" class="index1">
+	<td><a href="MusicianDetail?mid=131979">Betsy ...</a></td>
+	<td>1980</td>
+	<td>cga</td>
+	<td>1</td>
+</tr>
+
+<tr id="M105738" class="index0">
+	<td><a href="MusicianDetail?mid=105738">Betty ...</a></td>
+	<td>1951</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M75686" class="index1">
+	<td><a href="MusicianDetail?mid=75686">Bill ...</a></td>
+	<td>1929</td>
+	<td>vln</td>
+	<td>2</td>
+</tr>
+
+<tr id="M66369" class="index0">
+	<td><a href="MusicianDetail?mid=66369">Billy ...</a></td>
+	<td>1924</td>
+	<td>cl,as</td>
+	<td>4</td>
+</tr>
+
+<tr id="M31587" class="index1">
+	<td><a href="MusicianDetail?mid=31587">Bobbie ...</a></td>
+	<td>1956</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M235305" class="index0">
+	<td><a href="MusicianDetail?mid=235305">Bom ...</a></td>
+	<td>2017</td>
+	<td>unknown inst.</td>
+	<td>1</td>
+</tr>
+
+<tr id="M103138" class="index1">
+	<td><a href="MusicianDetail?mid=103138">Boto ...</a></td>
+	<td>1974</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+<tr id="M148837" class="index0">
+	<td><a href="MusicianDetail?mid=148837">Brian ...</a></td>
+	<td>1987</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M140983" class="index1">
+	<td><a href="MusicianDetail?mid=140983">Budd ...</a></td>
+	<td>1981</td>
+	<td>vln</td>
+	<td>1</td>
+</tr>
+
+<tr id="M92991" class="index0">
+	<td><a href="MusicianDetail?mid=92991">Carl ...</a></td>
+	<td>1935</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M197300" class="index1">
+	<td><a href="MusicianDetail?mid=197300">Carlos &quot;El Niche&quot; ...</a></td>
+	<td>1999</td>
+	<td>coros,vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M85051" class="index0">
+	<td><a href="MusicianDetail?mid=85051">Charles ...</a></td>
+	<td>1943</td>
+	<td>hca</td>
+	<td>1</td>
+</tr>
+
+<tr id="M105072" class="index1">
+	<td><a href="MusicianDetail?mid=105072">Chris ...</a></td>
+	<td>1952</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M152252" class="index0">
+	<td><a href="MusicianDetail?mid=152252">Christine ...</a></td>
+	<td>1973</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M91103" class="index1">
+	<td><a href="MusicianDetail?mid=91103">Clarence ...</a></td>
+	<td>1945</td>
+	<td>as</td>
+	<td>1</td>
+</tr>
+
+<tr id="M90983" class="index0">
+	<td><a href="MusicianDetail?mid=90983">Dave ...</a></td>
+	<td>1926</td>
+	<td>as</td>
+	<td>1</td>
+</tr>
+
+<tr id="M125897" class="index1">
+	<td><a href="MusicianDetail?mid=125897">Debbie ...</a></td>
+	<td>1982</td>
+	<td>cello</td>
+	<td>1</td>
+</tr>
+
+<tr id="M83406" class="index0">
+	<td><a href="MusicianDetail?mid=83406">Deiso ...</a></td>
+	<td>1981</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M106034" class="index1">
+	<td><a href="MusicianDetail?mid=106034">Derek ...</a></td>
+	<td>1991</td>
+	<td>d,misc. inst.,perc</td>
+	<td>1</td>
+</tr>
+
+<tr id="M16518" class="index0">
+	<td><a href="MusicianDetail?mid=16518">Dick ...</a></td>
+	<td>1934</td>
+	<td>hrn</td>
+	<td>1</td>
+</tr>
+
+<tr id="M109182" class="index1">
+	<td><a href="MusicianDetail?mid=109182">Dirceu ...</a></td>
+	<td>1980</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M221567" class="index0">
+	<td><a href="MusicianDetail?mid=221567">Eric ...</a></td>
+	<td>2001</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M74135" class="index1">
+	<td><a href="MusicianDetail?mid=74135">Etta ...</a></td>
+	<td>1931</td>
+	<td>vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M122843" class="index0">
+	<td><a href="MusicianDetail?mid=122843">Fernando ...</a></td>
+	<td>1983</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M213151" class="index1">
+	<td><a href="MusicianDetail?mid=213151">Francois ...</a></td>
+	<td>1987</td>
+	<td>tb</td>
+	<td>1</td>
+</tr>
+
+<tr id="M98162" class="index0">
+	<td><a href="MusicianDetail?mid=98162">Fred ...</a></td>
+	<td>1966</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M211127" class="index1">
+	<td><a href="MusicianDetail?mid=211127">Gabriel ...</a></td>
+	<td>1923</td>
+	<td>p</td>
+	<td>1</td>
+</tr>
+
+<tr id="M20520" class="index0">
+	<td><a href="MusicianDetail?mid=20520">George ...</a></td>
+	<td>1948-1980</td>
+	<td>tb,b,vcl</td>
+	<td>7</td>
+</tr>
+
+<tr id="M117341" class="index1">
+	<td><a href="MusicianDetail?mid=117341">Goody ...</a></td>
+	<td>1955-1956</td>
+	<td>tp</td>
+	<td>2</td>
+</tr>
+
+<tr id="M184497" class="index0">
+	<td><a href="MusicianDetail?mid=184497">Greg ...</a></td>
+	<td>1975</td>
+	<td>p</td>
+	<td>1</td>
+</tr>
+
+<tr id="M103137" class="index1">
+	<td><a href="MusicianDetail?mid=103137">Helio ...</a></td>
+	<td>1974</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M66408" class="index0">
+	<td><a href="MusicianDetail?mid=66408">Henk ...</a></td>
+	<td>1941</td>
+	<td>cl,ts</td>
+	<td>3</td>
+</tr>
+
+<tr id="M106458" class="index1">
+	<td><a href="MusicianDetail?mid=106458">Henri ...</a></td>
+	<td>1961</td>
+	<td>fl</td>
+	<td>2</td>
+</tr>
+
+<tr id="M209322" class="index0">
+	<td><a href="MusicianDetail?mid=209322">Henrik ...</a></td>
+	<td>1981</td>
+	<td>ts</td>
+	<td>1</td>
+</tr>
+
+<tr id="M90647" class="index1">
+	<td><a href="MusicianDetail?mid=90647">Jerome ...</a></td>
+	<td>1947</td>
+	<td>b</td>
+	<td>1</td>
+</tr>
+
+<tr id="M106036" class="index0">
+	<td><a href="MusicianDetail?mid=106036">Jilien ...</a></td>
+	<td>1991</td>
+	<td>background vcl</td>
+	<td>1</td>
+</tr>
+
+<tr id="M220108" class="index1">
+	<td><a href="MusicianDetail?mid=220108">Jim ...</a></td>
+	<td>1925</td>
+	<td>bj</td>
+	<td>4</td>
+</tr>
+
+<tr id="M55170" class="index0">
+	<td><a href="MusicianDetail?mid=55170">Jimmy ...</a></td>
+	<td>1956</td>
+	<td>g</td>
+	<td>1</td>
+</tr>
+
+<tr id="M16523" class="index1">
+	<td><a href="MusicianDetail?mid=16523">Jo-Jo ...</a></td>
+	<td>1934</td>
+	<td>d</td>
+	<td>1</td>
+</tr>
+
+</tbody>
+</table>
+<div class="bottom_buttons">
+	<a href="MusicianIndex?mid=258350&nav=down"><img src="buttons/nextPage.gif" alt="Next Page"></a>
+</div>
+<a name="bottom"></a>
+</main>
+</body>
+</html>
+
