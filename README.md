@@ -1,5 +1,5 @@
-# MusiciansList
-
+# Modal and Nodal
+## Basic Info
 Group Name: Modal & Nodal
 
 
@@ -8,7 +8,7 @@ Nata Verthein (NetID: av45)
 KB Cho (NetID: ronaldc5)
 
 
-Project Introduction:
+## Project Introduction:
 Jazz is an under-digitized art form with a long history.  There exists a database of all jazz musicians and jazz recordings named “The Jazz Discography” (TJD), but it’s not possible to sort by any criteria other than performer name or song title.  This is functional enough for its usual customers - jazz archivers - but it’s inadequate for any mass-scale research.  This project aims to create a database of preeminent jazz musicians by scraping TJD with a focus on recording sessions.
 
 
@@ -18,7 +18,7 @@ Jazz is an under-digitized art form with a long history.  There exists a databas
 This information allows for many possible future use-cases.  It can later be used to create a node-edge map of musicians and their collaborations sorted by date-range / era, sorting by recording session quantity (a basic and currently impossible way to find important musicians), used to further mine individual musician’s pages to make a separate database of the most prominent jazz songs (also something that doesn’t currently exist), or any other uses that need a dataset.  It is also possible to use this data to gather information on each musician’s region (another metric TJD conveniently tracks, but that is not searchable), allowing for regional connections as well as temporal. This would be an invaluable resource that simply doesn’t exist yet due to the extremely small overlap between jazz musician and programmer.
 
 
-Technical Overview:
+## Technical Overview:
 There are three core components of this project.  The current plan is to finish (1) by checkpoint 1, (2) (and a significant portion of 3) by checkpoint 2, and (3) by presentation date:
 Access the database through a web scraper
 Scrape the pages for our desired information (performer name, years active, instruments, number of recording sessions, and TJD ID)
@@ -38,7 +38,7 @@ The above stores information for a man named “Four String Jack”, who was act
 
 
 
-Possible Challenges: 
+## Possible Challenges: 
 accessing source page behind account verification (how to log in with web scraper?)
 There are fewer libraries and tools in Rust to make use of in web scraping
 Since the web scraping involves a lot of scraping, working with the string in rust could be a challenging aspect of the project
