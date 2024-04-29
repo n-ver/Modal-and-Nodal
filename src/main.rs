@@ -23,8 +23,14 @@ async fn main() -> WebDriverResult<()> {
     driver.find_element(By::ClassName("firstHeading")).await?;
     assert_eq!(driver.title().await?, "Selenium - Wikipedia");
 
+    //getting the information from the cookies
+    all_cookies = driver.get_cookies()
+
+    for cookie in all_cookies:
+        print(cookie['name'], cookie['value'])
+
     // Always explicitly close the browser.
     driver.quit().await?;
-
+    print!(UIUC_User);
     Ok(())
 }
