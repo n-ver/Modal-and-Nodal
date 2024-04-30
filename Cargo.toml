@@ -9,3 +9,5 @@ edition = "2021"
 thirtyfour = "0.26.0"
 tokio = { version = "1", features = ["full"] }
 color-eyre = "0.6"
+reqwest = {version = "0.11", features = ["blocking"]}
+scraper = "0.12.0"
