@@ -1,14 +1,139 @@
 use thirtyfour::prelude::*;
 use tokio::time::Duration;
 use std::env;
+use std::fmt;
+use mongodb::{Client, options::{ClientOptions, ResolverConfig}};
+use std::error::Error;
+use tokio;
+use mongodb::bson::doc;
+use mongodb::Database;
+use mongodb::Collection;
+use bson::Document;
 
-#[tokio::main]
-async fn main() {
-    login().await;
-    
+
+struct MusData {
+    id: String,
+    name: String,
+    instruments: String,
+    years: String,
+    sessions: i32,
 }
 
-async fn login() -> WebDriverResult<()> {
+impl fmt::Display for MusData {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        let str = format!(
+            "{} {} {} {} {}",
+            self.id,
+            self.name,
+            self.instruments,
+            self.years,
+            self.sessions
+        );
+        write!(fmt, "{}", str) 
+        // Ok(())
+    }
+}
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    println!("starting database");
+    let client_uri = "FIX ME";
+    // let client_uri = env::var("MONGODB_URI").expect("You must set the MONGODB_URI environment var!"); not working
+
+    // A Client is needed to connect to MongoDB:
+    // An extra line of code to work around a DNS issue on Windows:
+    let options =
+        ClientOptions::parse_with_resolver_config(&client_uri, ResolverConfig::cloudflare())
+            .await?;
+    let client = Client::with_options(options)?;
+    let database = client.database("Jazz_Musicians");
+    let v = vec![
+    MusData {
+        id : "M258350".to_string(),
+        name : "".to_string(),
+        instruments : " ".to_string(),
+        years : "1976-2023".to_string(),
+        sessions : 5,
+    },
+    MusData {
+        id : "M75499".to_string(),
+        name : "\"Blackie\"".to_string(),
+        instruments : "d".to_string(),
+        years : "1926-1927".to_string(),
+        sessions : 6,
+    },
+    MusData {
+        id : "M158245".to_string(),
+        name : "\"Wesley \"G\"\"".to_string(),
+        instruments : "g".to_string(),
+        years : "1999".to_string(),
+        sessions : 3,
+    },
+    MusData {
+        id : "M75498".to_string(),
+        name : "\"Tubi\"".to_string(),
+        instruments : "tu".to_string(),
+        years : "1926-1927".to_string(),
+        sessions : 6,
+    },
+    MusData {
+        id : "M221030".to_string(),
+        name : "Willy ---".to_string(),
+        instruments : "tp".to_string(),
+        years : "1946".to_string(),
+        sessions : 3,
+    },
+    MusData {
+        id : "M82320".to_string(),
+        name : "\"Chief\" ...".to_string(),
+        instruments : "tu,b".to_string(),
+        years : "1923-1944".to_string(),
+        sessions : 7,
+    },
+    MusData {
+        id : "M106354".to_string(),
+        name : "\"Shaky Walter\" ...".to_string(),
+        instruments : "hca".to_string(),
+        years : "1927-1928".to_string(),
+        sessions : 5,
+    },
+    MusData {
+        id : "M66369".to_string(),
+        name : "Billy ...".to_string(),
+        instruments : "cl,as".to_string(),
+        years : "1924".to_string(),
+        sessions : 4,
+    },
+    MusData {
+        id : "M20520".to_string(),
+        name : "George ...".to_string(),
+        instruments : "tb,b,vcl".to_string(),
+        years : "1948-1980".to_string(),
+        sessions : 7,
+    },
+    MusData {
+        id : "M66408".to_string(),
+        name : "Henk ...".to_string(),
+        instruments : "cl,ts".to_string(),
+        years : "1941".to_string(),
+        sessions : 3,
+    },
+    MusData {
+        id : "M220108".to_string(),
+        name : "Jim ...".to_string(),
+        instruments : "bj".to_string(),
+        years : "1925".to_string(),
+        sessions : 4,
+    },
+];
+
+    // scraper().await;
+    for data in v {
+        upload(&database, data).await;
+    };
+    Ok(())
+}
+// Gathers data
+async fn scraper() -> WebDriverResult<()> {
     let caps = DesiredCapabilities::chrome();
     let driver = WebDriver::new("http://localhost:9515", &caps).await?;
 
@@ -57,23 +182,87 @@ async fn login() -> WebDriverResult<()> {
     search_button.click().await?;
     let table = driver.find_element(By::Css("table.index")).await?;
     let rows = table.find_elements(By::Css("tr")).await?;
-    let mut musicians_with_more_than_two_sessions = Vec::new();
+    let mut musicians_with_more_than_two_sessions : Vec<MusData> = Vec::new();
 
     for row in rows.iter().skip(1) {  // Skip header row
         let cells = row.find_elements(By::Css("td")).await?;
         if cells.len() > 2 { // Ensure there are enough columns in the row
+            let id = row.get_attribute("id").await?.unwrap_or_else(|| "id failed".to_string());
             let musician_name = cells[0].text().await?; // Index might need adjustment
+            let years = cells[1].text().await?;
+            let instruments = cells[2].text().await?;
             let session_count: i32 = cells[3].text().await?.parse().unwrap_or(0); // Index might need adjustment
 
             if session_count > 2 {
-                musicians_with_more_than_two_sessions.push(musician_name);
+                musicians_with_more_than_two_sessions.push(MusData {
+                    id: id,
+                    name : musician_name,
+                    instruments : instruments,
+                    years: years,
+                    sessions: session_count,
+                });
             }
         }
     }
 
     // Output the musicians
+    println!("let v = vect![");
     for musician in musicians_with_more_than_two_sessions {
-        println!("Musician: {}", musician);
+        println!("MusData {{ \nid : \"{}\",\nname : \"{}\",\ninstruments : \"{}\",\nyears : \"{}\",\nsessions : {},\n}},", musician.id, musician.name, musician.instruments, musician.years, musician.sessions);
+    }
+    println!("];");
+    Ok(())
+}
+
+// Uploads to database
+async fn upload(database: &Database, data: MusData) -> Result<(), Box<dyn Error>> { // UPLOADS TO WRONG DATABASE
+    // filters into correct collection
+    if data.sessions < 50 {
+        let collection = database.collection("0025");
+        insert_or_not(collection, data).await?;
+    } else if data.sessions < 100 {
+        let collection = database.collection("0050");
+        insert_or_not(collection, data).await?;
+    } else if data.sessions < 200 {
+        let collection = database.collection("0100");
+        insert_or_not(collection, data).await?;
+    } else if data.sessions < 500 {
+        let collection = database.collection("0200");
+        insert_or_not(collection, data).await?;
+    } else if data.sessions < 1000 {
+        let collection = database.collection("0500");
+        insert_or_not(collection, data).await?;
+    } else {
+        let collection = database.collection("1000");
+        insert_or_not(collection, data).await?;
     }
     Ok(())
 }
+
+// mongodb+srv://Jazz_Musician_Scraper:TzErtYpD74ueEQ1I@cluster0.wyv1qyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+// inserts if not already in database
+async fn insert_or_not(collection: Collection<Document>, data: MusData)  -> Result<(), Box<dyn Error>> { 
+    println!("insert or not running");
+    let already_exists: Option <Document> = collection.find_one(
+        doc! {
+              "id": data.id.clone(),
+        },
+        None,
+     ).await?;
+     println!("doc made troubleshooting");
+     if already_exists.is_none() { // entry does not exist
+        let new_doc = doc! {
+            "id" : data.id,
+            "name" : data.name,
+            "instruments" : data.instruments,
+            "years active" : data.years,
+            "session count" : data.sessions,
+        };
+    let insert_result = collection.insert_one(new_doc.clone(), None).await?;
+     } 
+     Ok(()) // didn't exist
+}
+// cedar walton bolivia
+// driftin
+// flintstones
