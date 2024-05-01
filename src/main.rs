@@ -3,7 +3,12 @@ use tokio::time::Duration;
 use std::env;
 
 #[tokio::main]
-async fn main() -> WebDriverResult<()> {
+async fn main() {
+    login().await;
+    
+}
+
+async fn login() -> WebDriverResult<()> {
     let caps = DesiredCapabilities::chrome();
     let driver = WebDriver::new("http://localhost:9515", &caps).await?;
 
