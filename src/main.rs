@@ -36,7 +36,7 @@ impl fmt::Display for MusData {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     println!("starting database");
-    let client_uri = "FIX ME";
+    let client_uri = "mongodb+srv://Jazz_Musician_Scraper:9tb1im6RJD9zdXoT@cluster0.amzlhb5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     // let client_uri = env::var("MONGODB_URI").expect("You must set the MONGODB_URI environment var!"); not working
 
     // A Client is needed to connect to MongoDB:
@@ -266,3 +266,4 @@ async fn insert_or_not(collection: Collection<Document>, data: MusData)  -> Resu
 // cedar walton bolivia
 // driftin
 // flintstones
+// the sequel ??? miller
