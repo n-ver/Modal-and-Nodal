@@ -9,6 +9,7 @@ use mongodb::bson::doc;
 use mongodb::Database;
 use mongodb::Collection;
 use bson::Document;
+use tokio::sync::mpsc;
 
 
 struct MusData {
@@ -35,8 +36,8 @@ impl fmt::Display for MusData {
 }
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    println!("starting database");
-    let client_uri = "FIX ME";
+    
+    let client_uri = "mongodb+srv://Jazz_Musician_Scraper:TzErtYpD74ueEQ1I@cluster0.wyv1qyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     // let client_uri = env::var("MONGODB_URI").expect("You must set the MONGODB_URI environment var!"); not working
 
     // A Client is needed to connect to MongoDB:
@@ -46,6 +47,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .await?;
     let client = Client::with_options(options)?;
     let database = client.database("Jazz_Musicians");
+    let (tx, rx) = mpsc::channel(32);
     let v = vec![
     MusData {
         id : "M258350".to_string(),
@@ -124,16 +126,23 @@ async fn main() -> Result<(), Box<dyn Error>> {
         years : "1925".to_string(),
         sessions : 4,
     },
-];
-
+];  
+    
     // scraper().await;
-    for data in v {
-        upload(&database, data).await;
-    };
+    let scraper_handle = tokio::spawn(async move {
+        scraper(tx).await;
+    });
+    
+    let upload_handle = tokio::spawn(async move {
+        receive_from_scraper(rx, &database).await;
+    });
+    
+    scraper_handle.await?;
+    upload_handle.await?;
     Ok(())
 }
 // Gathers data
-async fn scraper() -> WebDriverResult<()> {
+async fn scraper(tx: mpsc::Sender<MusData>) -> Result<(), Box<dyn Error>> {
     let caps = DesiredCapabilities::chrome();
     let driver = WebDriver::new("http://localhost:9515", &caps).await?;
 
@@ -150,7 +159,6 @@ async fn scraper() -> WebDriverResult<()> {
 
     // Type in the search terms.
     let UIUC_User : String = env::var("UIUC_User").unwrap_or_else(|_| "Unknown user".to_string());
-    
     email_form.send_keys(UIUC_User).await?;
     
     // Click the next button.
@@ -158,8 +166,8 @@ async fn scraper() -> WebDriverResult<()> {
     next_button.click().await?;
 
     // Type in password
-    let UIUC_pass : String = env::var("UIUC_Pass").unwrap_or_else(|_| "Unknown user".to_string());
-    
+    // let UIUC_pass : String = env::var("UIUC_Pass").unwrap_or_else(|_| "Unknown user".to_string());
+    let UIUC_pass = "Rc050109#123";
     driver.find_element(By::Id("i0118")).await?;
     tokio::time::sleep(Duration::from_secs(1)).await;
     let pass_form = driver.find_element(By::Id("i0118")).await?;
@@ -180,11 +188,13 @@ async fn scraper() -> WebDriverResult<()> {
     search_button.click().await?;
     let search_button = driver.find_element(By::Css("input[name='action2'][value='Search']")).await?;
     search_button.click().await?;
+    let link = driver.find_element(By::Css("a[href*='nav=down']")).await?;
+    link.click().await?;
     let table = driver.find_element(By::Css("table.index")).await?;
     let rows = table.find_elements(By::Css("tr")).await?;
     let mut musicians_with_more_than_two_sessions : Vec<MusData> = Vec::new();
-
-    for row in rows.iter().skip(1) {  // Skip header row
+    
+    for row in rows.iter().skip(1) { // Skip header row
         let cells = row.find_elements(By::Css("td")).await?;
         if cells.len() > 2 { // Ensure there are enough columns in the row
             let id = row.get_attribute("id").await?.unwrap_or_else(|| "id failed".to_string());
@@ -192,15 +202,16 @@ async fn scraper() -> WebDriverResult<()> {
             let years = cells[1].text().await?;
             let instruments = cells[2].text().await?;
             let session_count: i32 = cells[3].text().await?.parse().unwrap_or(0); // Index might need adjustment
-
+    
             if session_count > 2 {
-                musicians_with_more_than_two_sessions.push(MusData {
+                let data: MusData = MusData {
                     id: id,
-                    name : musician_name,
-                    instruments : instruments,
+                    name: musician_name,
+                    instruments: instruments,
                     years: years,
                     sessions: session_count,
-                });
+                };
+                tx.send(data).await.expect("Failed to send data");
             }
         }
     }
@@ -238,19 +249,24 @@ async fn upload(database: &Database, data: MusData) -> Result<(), Box<dyn Error>
     }
     Ok(())
 }
-
+async fn receive_from_scraper(mut receiver: mpsc::Receiver<MusData>, database: &Database) -> Result<(), Box<dyn Error>> {
+    while let Some(data) = receiver.recv().await {
+        upload(&database, data).await?;
+    }
+    Ok(())
+}
 // mongodb+srv://Jazz_Musician_Scraper:TzErtYpD74ueEQ1I@cluster0.wyv1qyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 // inserts if not already in database
 async fn insert_or_not(collection: Collection<Document>, data: MusData)  -> Result<(), Box<dyn Error>> { 
-    println!("insert or not running");
+    
     let already_exists: Option <Document> = collection.find_one(
         doc! {
               "id": data.id.clone(),
         },
         None,
      ).await?;
-     println!("doc made troubleshooting");
+     
      if already_exists.is_none() { // entry does not exist
         let new_doc = doc! {
             "id" : data.id,
