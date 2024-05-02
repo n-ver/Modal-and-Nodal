@@ -166,8 +166,8 @@ async fn scraper(tx: mpsc::Sender<MusData>) -> Result<(), Box<dyn Error>> {
     next_button.click().await?;
 
     // Type in password
-    // let UIUC_pass : String = env::var("UIUC_Pass").unwrap_or_else(|_| "Unknown user".to_string());
-    let UIUC_pass = "Rc050109#123";
+    let UIUC_pass : String = env::var("UIUC_Pass").unwrap_or_else(|_| "Unknown user".to_string());
+    
     driver.find_element(By::Id("i0118")).await?;
     tokio::time::sleep(Duration::from_secs(1)).await;
     let pass_form = driver.find_element(By::Id("i0118")).await?;
